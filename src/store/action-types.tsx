@@ -1,0 +1,9 @@
+export enum actionTypes {
+    ADD_TASK = 'ADD_TASK',
+    EDIT_TASK = 'EDIT_TASK',
+    REMOVE_TASK = 'REMOVE_TASK',
+    TOGGLE_TASK = 'TOGGLE_TASK',
+    TOGGLE_ALL = 'TOGGLE_ALL',
+    CLEAR_COMPLETED = 'CLEAR_COMPLETED',
+    SET_FILTER = 'SET_FILTER',
+}

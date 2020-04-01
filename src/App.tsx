@@ -1,37 +1,43 @@
-import React from 'react';
+import React, { useState } from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from 'react-router-dom';
 import './App.scss';
 import TodoHeader from './components/todo-header';
 import TodoList from './components/todo-list';
 import TodoFooter from './components/todo-footer';
+import { useDispatch } from 'react-redux';
+import { toggleAllAction } from './store/actions';
+
 
 const App = () => {
+
+  const dispatch = useDispatch();
+  const [toggle, setToggle] = useState(false);
+
+  const toggleAll = () => {
+    dispatch(toggleAllAction(!toggle));
+    setToggle(current => !current);
+  }
+
   return (
-    <section className="todoapp">
-      <header className="header">
-        <h1>todos</h1>
-        <input className="new-todo" placeholder="What needs to be done?" />
-      </header>
-      <section className="main">
-        <input className="toggle-all" type="checkbox" />
-        <label>Mark all as complete</label>
-        <ul className="todo-list"></ul>
-      </section>
-      <footer className="footer">
-        <span className="todo-count"></span>
-        <ul className="filters">
-          <li>
-            <a href="#/" className="selected">All</a>
-          </li>
-          <li>
-            <a href="#/active">Active</a>
-          </li>
-          <li>
-            <a href="#/completed">Completed</a>
-          </li>
-        </ul>
-        <button className="clear-completed">Clear completed</button>
-      </footer>
-    </section>
+    <Router>
+      <Switch>
+        <Route path="/:filter?">
+          <section className="todoapp">
+            <TodoHeader></TodoHeader>
+            <section className="main">
+              <input id="toggle-all" className="toggle-all" onChange={() => toggleAll()} type="checkbox" />
+              <label htmlFor="toggle-all">Mark all as complete</label>
+              <TodoList></TodoList>
+            </section>
+            <TodoFooter></TodoFooter>
+          </section>
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 export default App;
